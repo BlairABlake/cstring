@@ -15,11 +15,9 @@ void string_init(string_t* s) {
 }
 
 void string_cpy(string_t* destination, string_t* source) {
-    if(destination->len < source->len) {
-        string_free(destination);
-        destination->len = source->len;
-        destination->data = malloc(source->len);
-    }
+    string_free(destination);
+    destination->len = source->len;
+    destination->data = malloc(source->len);
 
     strcpy((char*)destination->data, (char*)source->data);
 }
@@ -46,4 +44,25 @@ void string_cat(string_t* s1, string_t* s2) {
 
 int string_cmp(string_t* s1, string_t* s2) {
     return strcmp((char*)s1->data, (char*)s2->data);
+}
+
+void string_ncpy(string_t* destination, string_t* source, int n) {
+    string_free(destination);
+    destination->len = n;
+    destination->data = malloc(n);
+
+    strncpy((char*)destination->data, (char*)source->data, n);
+}
+
+void string_ncat(string_t* s1, string_t* s2, int n) {
+    char* t = malloc(s1->len + n);
+    strcpy(t, (char*)s1->data);
+    strncat(t, (char*)s2->data, n);
+    string_free(s1);
+    *s1 = string(t);
+    free(t);
+}
+
+int string_ncmp(string_t* s1, string_t* s2, int n) {
+    return strncmp((char*)s1->data, (char*)s2->data, n);
 }

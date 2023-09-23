@@ -17,5 +17,8 @@ void string_mov(string_t*, string_t*);
 void string_free(string_t*);
 void string_cat(string_t*, string_t*);
 int string_cmp(string_t*, string_t*);
+void string_ncpy(string_t*, string_t*, int);
+void string_ncat(string_t*, string_t*, int);
+int string_ncmp(string_t*, string_t*, int);
 
 #endif //CSTRING_CSTRING_H
