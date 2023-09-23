@@ -8,5 +8,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/deps/munit)
 add_library(cstring cstring.c)
 add_library(munit deps/munit/munit.c)
 
-add_executable(test test.c cstring.h deps/munit/munit.h)
-target_link_libraries(test cstring munit)
+add_executable(cstring_test test.c cstring.h deps/munit/munit.h)
+target_link_libraries(cstring_test cstring munit)

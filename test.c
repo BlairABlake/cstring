@@ -13,6 +13,13 @@ TEST(test_string_init){
     munit_assert(s.len == 0);
 }
 
+TEST(test_string_init_n) {
+    string_t s = string_init_n(10);
+    munit_assert(s.len == 10);
+
+    string_free(&s);
+}
+
 TEST(test_string_cmp) {
     string_t s1 = string("s1");
     string_t s2 = string("s1");
@@ -106,6 +113,18 @@ TEST(test_string_ncat) {
     string_free(&s2);
 }
 
+TEST(test_string_str) {
+    string_t s1 = string("s1_hello");
+    string_t hello = string("hello");
+    string_t t = string_str(&s1, "hello");
+    munit_assert(t.len == 5);
+    munit_assert(t.data == s1.data+3);
+    munit_assert(string_cmp(&t, &hello) == 0);
+
+    string_free(&s1);
+    string_free(&hello);
+}
+
 MunitTest tests[] = {
         {
           "string_init",
@@ -114,6 +133,14 @@ MunitTest tests[] = {
           NULL,
           MUNIT_TEST_OPTION_NONE,
           NULL
+        },
+        {
+            "string_init_n",
+            test_string_init_n,
+                NULL,
+                NULL,
+                MUNIT_TEST_OPTION_NONE,
+                NULL
         },
         {
                 "string_cmp",
@@ -178,6 +205,14 @@ MunitTest tests[] = {
                 NULL,
                 MUNIT_TEST_OPTION_NONE,
                 NULL
+        },
+        {
+            "string_str",
+            test_string_str,
+            NULL,
+            NULL,
+            MUNIT_TEST_OPTION_NONE,
+            NULL
         },
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
