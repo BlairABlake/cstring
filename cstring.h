@@ -17,6 +17,8 @@ void string_cpy(string_t*, string_t*);
 void string_mov(string_t*, string_t*);
 void string_free(string_t*);
 void string_cat(string_t*, string_t*);
+void string_cat1(string_t*, string_t);
+void string_mcat(string_t*, string_t*);
 int string_cmp(string_t*, string_t*);
 void string_ncpy(string_t*, string_t*, size_t);
 void string_ncat(string_t*, string_t*, size_t);

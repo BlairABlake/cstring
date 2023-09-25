@@ -77,6 +77,27 @@ TEST(test_string_cat) {
     string_free(&s2);
 }
 
+TEST(test_string_cat1) {
+    string_t s1 = string("s1");
+
+    string_cat1(&s1, string("s2"));
+    munit_assert(strcmp((char*)s1.data, "s1s2") == 0);
+    munit_assert(s1.len = 4);
+
+    string_free(&s1);
+}
+
+TEST(test_string_mcat) {
+    string_t s1 = string("s1");
+    string_t s2 = string("s2");
+
+    string_mcat(&s1, &s2);
+    munit_assert(strcmp((char*)s1.data, "s1s2") == 0);
+    munit_assert(s1.len = 4);
+
+    string_free(&s1);
+}
+
 TEST(test_string_ncmp) {
     string_t s1 = string("s1");
     string_t s2 = string("s1");
@@ -181,6 +202,22 @@ MunitTest tests[] = {
             NULL,
             MUNIT_TEST_OPTION_NONE,
             NULL
+        },
+        {
+          "string_cat1",
+          test_string_cat1,
+          NULL,
+          NULL,
+          MUNIT_TEST_OPTION_NONE,
+          NULL
+        },
+        {
+                "string_mcat",
+                test_string_mcat,
+                NULL,
+                NULL,
+                MUNIT_TEST_OPTION_NONE,
+                NULL
         },
         {
                 "string_ncmp",

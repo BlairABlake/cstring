@@ -4,7 +4,7 @@
 
 string_t string(char* s) {
     size_t l = strlen(s);
-    char* t = malloc(l);
+    char* t = malloc((l+1) * sizeof(char)); // +1 indicates null terminator
     strcpy(t, s);
     return (string_t){l, (u_char*)t};
 }
@@ -15,13 +15,13 @@ void string_init(string_t* s) {
 }
 
 string_t string_init_n(size_t n) {
-    return (string_t){n, malloc(sizeof(u_char) * n) };
+    return (string_t){n, malloc(sizeof(char) * (n + 1)) };
 }
 
 void string_cpy(string_t* destination, string_t* source) {
     string_free(destination);
     destination->len = source->len;
-    destination->data = malloc(source->len);
+    destination->data = malloc((source->len+1) * sizeof(char));
 
     strcpy((char*)destination->data, (char*)source->data);
 }
@@ -38,10 +38,30 @@ void string_free(string_t* s) {
 }
 
 void string_cat(string_t* s1, string_t* s2) {
-    char* t = malloc(s1->len + s2->len);
+    char* t = malloc((s1->len + s2->len + 1) * sizeof(char));
     strcpy(t, (char*)s1->data);
     strcat(t, (char*)s2->data);
     string_free(s1);
+    *s1 = string(t);
+    free(t);
+}
+
+void string_cat1(string_t* s1, string_t s2) {
+    char* t = malloc((s1->len + s2.len + 1) * sizeof(char));
+    strcpy(t, (char*)s1->data);
+    strcat(t, (char*)s2.data);
+    string_free(s1);
+    string_free(&s2);
+    *s1 = string(t);
+    free(t);
+}
+
+void string_mcat(string_t* s1, string_t* s2) {
+    char* t = malloc((s1->len + s2->len + 1) * sizeof(char));
+    strcpy(t, (char*)s1->data);
+    strcat(t, (char*)s2->data);
+    string_free(s1);
+    string_free(s2);
     *s1 = string(t);
     free(t);
 }
@@ -53,13 +73,13 @@ int string_cmp(string_t* s1, string_t* s2) {
 void string_ncpy(string_t* destination, string_t* source, size_t n) {
     string_free(destination);
     destination->len = n;
-    destination->data = malloc(n);
+    destination->data = malloc((n+1) * sizeof(char) );
 
     strncpy((char*)destination->data, (char*)source->data, n);
 }
 
 void string_ncat(string_t* s1, string_t* s2, size_t n) {
-    char* t = malloc(s1->len + n);
+    char* t = malloc((s1->len + n + 1) * sizeof(char));
     strcpy(t, (char*)s1->data);
     strncat(t, (char*)s2->data, n);
     string_free(s1);
